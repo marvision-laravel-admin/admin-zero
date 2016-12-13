@@ -1,0 +1,25 @@
+{
+    "name": "marvision-laravel-admin/admin-zero",
+    "description": "Marvision Laravel Admin Back-end",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Marwen Hlaoui",
+            "email": "marwenhlaoui@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable", 
+    "require-dev": {
+        
+    },
+    "autoload": {
+      "psr-4": { 
+            "MarvisionLaravelAdmin\\AdminZero\\" : "src/"
+      },
+      "files" : [
+            "src/Http/helpers.php"
+      ]
+    }
+}
