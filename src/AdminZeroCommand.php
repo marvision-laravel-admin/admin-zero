@@ -53,24 +53,43 @@ class AdminZeroCommand extends Command
             Artisan::call('make:auth');
             File::Delete(base_path('routes/web.php'));
             File::deleteDirectory(base_path('resources/views')); 
-            Artisan::call('key:generate');
         } 
 
-        require_once __DIR__.'/../load/files/route.php';
+        require_once __DIR__.'/../load/files/route.php'; 
+        File::copy(__DIR__.'/../packages/app.config.php', base_path('config/app.php')); 
+        require_once __DIR__.'/../load/database.php'; 
+        require_once __DIR__.'/../load/files/kernel.php'; 
+        File::copy(__DIR__.'/../packages/app.config.auth.php', base_path('config/auth.php')); 
+        
+        
+        $this->info("Migrating the database tables into your application");
+        Artisan::call('migrate');
 
-         
+        $process = new Process('php artisan db:seed');
+        $process->run();
+
+        /*Artisan::call('entrust:migration');
+ 
+
+        $this->info("Dumping the autoloaded files and reloading all new files");
+        
+        $process = new Process('composer dump-autoload');
+        $process->run();
+          */
+
+        Artisan::call('key:generate');
+ 
+        
+        $this->info("Dumping the autoloaded files and reloading all new files");
+        
+        $process = new Process('composer dump-autoload');
+        $process->run();
 
         /*
         $this->info("Publishing the Project files");
         Artisan::call('vendor:publish');
 
-        //$this->info("Migrating the database tables into your application");
-        //Artisan::call('migrate');
-
-        //$this->info("Dumping the autoloaded files and reloading all new files");
         
-        $process = new Process('composer dump-autoload');
-        $process->run();
 
         //$this->info("Seeding data into the database");
         //$process = new Process('php artisan db:seed --class=AdminZeroDatabaseSeeder');
