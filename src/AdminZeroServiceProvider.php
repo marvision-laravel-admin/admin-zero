@@ -28,6 +28,7 @@ class AdminZeroServiceProvider extends ServiceProvider
 
 	public function register(){ 
 
+
 		$this->registerResources();
 
 		$this->app->bind('zero_admin',function($app){
@@ -43,6 +44,8 @@ class AdminZeroServiceProvider extends ServiceProvider
         });
         
         $this->commands('command.zero_admin');
+        
+
   
 	}
 
@@ -50,14 +53,22 @@ class AdminZeroServiceProvider extends ServiceProvider
 	
 
 	protected function registerResources(){
+
+		
         
 	 	/* define files which are going to be published */
 
 		$this->publishes([
 			/* Publish the assets to the Public folder */
 			__DIR__.'/../assets' => public_path('assets/layouts/admin'), 
-		], 'public');
+			], 'public');  
 
+
+ 
+		$this->publishes([
+            /* Publish the views to the Views folder */
+            __DIR__.'/../packages/views' => resource_path('views'), 
+            ]); 
  
     }
 

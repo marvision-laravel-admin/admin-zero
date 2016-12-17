@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Exception;
+use File;
 
 class AdminZeroCommand extends Command
 {
@@ -44,24 +45,40 @@ class AdminZeroCommand extends Command
      */
     public function fire()
     {
+        
+        require_once __DIR__.'/../load/files/env.php';
+ 
         if(!$this->option('existing')){
-            $this->info("Generating the default authentication scaffolding");
+            $this->info("Generating the default authentication");
             Artisan::call('make:auth');
-        }
-        $this->info("Publishing the Voyager assets, database, and config files");
+            File::Delete(base_path('routes/web.php'));
+            File::deleteDirectory(base_path('resources/views')); 
+            Artisan::call('key:generate');
+        } 
+
+        require_once __DIR__.'/../load/files/route.php';
+
+         
+
+        /*
+        $this->info("Publishing the Project files");
         Artisan::call('vendor:publish');
-        $this->info("Migrating the database tables into your application");
-        Artisan::call('migrate');
-        $this->info("Dumping the autoloaded files and reloading all new files");
+
+        //$this->info("Migrating the database tables into your application");
+        //Artisan::call('migrate');
+
+        //$this->info("Dumping the autoloaded files and reloading all new files");
         
         $process = new Process('composer dump-autoload');
         $process->run();
-        $this->info("Seeding data into the database");
-        $process = new Process('php artisan db:seed --class=AdminZeroDatabaseSeeder');
-        $process->run();
+
+        //$this->info("Seeding data into the database");
+        //$process = new Process('php artisan db:seed --class=AdminZeroDatabaseSeeder');
+        //$process->run();
         
-        $this->info("Adding the storage symlink to your public folder");
-        Artisan::call('storage:link');
+        //$this->info("Adding the storage symlink to your public folder");
+        //Artisan::call('storage:link');
+         */
         $this->info("Successfully installed Admin Zero! Enjoy :)");
         return;
         
