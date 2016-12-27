@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}"> 
-	<title>Login</title>
+	<title>@yield('title','Laravel Project Zero')</title>
 	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/lumen/bootstrap.min.css"> 
     <!-- Scripts -->
     <script>
@@ -31,9 +31,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    <a class="navbar-brand" href="{{ url('/') }}">Laravel Project Zero</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -46,12 +44,16 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            @if(Route::has('login'))
+                                <li><a href="{{ url('/login') }}">Login</a></li>
+                            @endif
+                            @if(Route::has('register'))
+                                <li><a href="{{ url('/register') }}">Register</a></li>
+                            @endif
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->fullname() }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">

@@ -2,7 +2,9 @@
 
 namespace MarvisionLaravelAdmin\AdminZero;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\ServiceProvider;    
+
 
 class AdminZeroServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AdminZeroServiceProvider extends ServiceProvider
 		require_once __DIR__.'/Http/config.php';  
 		
 		/* loading the routes files */
-		require_once __DIR__.'/Http/routes.php';  
+		//require_once __DIR__.'/Http/routes.php';  
 
 		/* loading the views files */
 
@@ -23,7 +25,11 @@ class AdminZeroServiceProvider extends ServiceProvider
 
 		$this->loadTranslationsFrom(__DIR__.'/lang','AdminZeroLang'); 
  
+
+   
+
 	}
+ 
 
 
 	public function register(){ 
@@ -42,7 +48,9 @@ class AdminZeroServiceProvider extends ServiceProvider
         $this->app['command.zero_admin'] = $this->app->share(function($app) {
             return new AdminZeroCommand;
         });
-        
+
+
+
         $this->commands('command.zero_admin');
         
 
@@ -71,6 +79,8 @@ class AdminZeroServiceProvider extends ServiceProvider
             ]); 
  
     }
+
+
 
 
 }

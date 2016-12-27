@@ -55,23 +55,71 @@ DB_PASSWORD=".$mysql_p."
 "; 
        }
 
+
            $fileContent .= "
 BROADCAST_DRIVER=log
-CACHE_DRIVER=file
+CACHE_DRIVER=array
 SESSION_DRIVER=file
 QUEUE_DRIVER=sync
 
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
-REDIS_PORT=6379
+REDIS_PORT=6379 ";
 
+       /*
+       *  E-mail
+       */
+
+
+
+        if ($this->confirm('Do you want a default email account [laravel.marwenhlaoui@gmail.com] ? ','yes')) {
+            
+            $email_pass = $this->secret('What is your E-mail password [laravel.marwenhlaoui@gmail.com] ? ');
+
+           $fileContent .= "
 MAIL_DRIVER=smtp
-MAIL_HOST=mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=laravel.marwenhlaoui@gmail.com
+MAIL_PASSWORD=".$email_pass."
+MAIL_ENCRYPTION=tls";
 
+        }else{ 
+
+
+            $email_adress = $this->ask('What is your E-mail ? ');
+            $email_pass = $this->secret('What is your E-mail password ['.$email_adress.'] ? ');
+            $email_driver = $this->ask('What is your E-mail driver ? ','smtp');
+            $email_host = $this->ask('What is your E-mail host ? ','smtp.gmail.com');
+            $email_port = $this->ask('What is your E-mail port ? ','587');
+            $email_enc = $this->ask('What is your E-mail ENCRYPTION ? ','tls');
+            
+           $fileContent .= "
+MAIL_DRIVER=".$email_driver."
+MAIL_HOST=".$email_host."
+MAIL_PORT=".$email_port."
+MAIL_USERNAME=".$email_adress."
+MAIL_PASSWORD=".$email_pass."
+MAIL_ENCRYPTION=".$email_enc."
+";
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           $fileContent .= "
 PUSHER_APP_ID=
 PUSHER_KEY=
 PUSHER_SECRET=";

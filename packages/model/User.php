@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use EntrustUserTrait;
 
     /**
-     * The attributes that are mass assignable
+     * The attributes that are mass assignable.2016
      *
      * @var array
      */
@@ -26,4 +28,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+
+    public function fullname(){
+        return $this->firstname.' '.$this->lastname;
+    }
+
+
 }

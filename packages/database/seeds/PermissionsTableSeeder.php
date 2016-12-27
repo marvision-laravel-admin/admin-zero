@@ -17,11 +17,16 @@ class PermissionsTableSeeder extends Seeder
         \DB::table('permissions')->insert(array (
             [ 
                 'name'          => 'dashboard',
-                'display_name'  => 'dashboard',
-                'description'   => 'access to back-end'
+                'display_name'  => 'Dashboard',
+                'description'   => 'Aaccess to back-end'
+            ],
+            [ 
+                'name'          => 'show_users',
+                'display_name'  => 'Show Users',
+                'description'   => 'Aaccess to show list of users'
             ],
         ));
-        $this->command->info('All permissions is done !');
+        //$this->command->info('All permissions is done !');
 
     }
 }

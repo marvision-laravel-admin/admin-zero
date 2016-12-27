@@ -1,8 +1,8 @@
 <?php 
 
 use Illuminate\Database\Seeder;  
-use Role;
-use User;
+use App\Role;
+use App\User;
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
 
        
 
-        $this->command->info('User table seeded!');
+        //$this->command->info('User table seeded!');
 
     }
 }

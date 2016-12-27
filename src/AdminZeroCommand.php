@@ -57,47 +57,28 @@ class AdminZeroCommand extends Command
 
         require_once __DIR__.'/../load/files/route.php'; 
         File::copy(__DIR__.'/../packages/app.config.php', base_path('config/app.php')); 
-        require_once __DIR__.'/../load/database.php'; 
-        require_once __DIR__.'/../load/files/kernel.php'; 
-        File::copy(__DIR__.'/../packages/app.config.auth.php', base_path('config/auth.php')); 
-        
+        require_once __DIR__.'/../load/database.php';  
+        require_once __DIR__.'/../load/files/kernel.php';  
+        File::copy(__DIR__.'/../packages/app.config.auth.php', base_path('config/auth.php'));  
+        File::copyDirectory(__DIR__.'/../packages/middleware', app_path('Http/Middleware'));
+        Artisan::call('key:generate'); 
         
         $this->info("Migrating the database tables into your application");
         Artisan::call('migrate');
 
         $process = new Process('php artisan db:seed');
-        $process->run();
+        $process->run(); 
 
-        /*Artisan::call('entrust:migration');
- 
-
-        $this->info("Dumping the autoloaded files and reloading all new files");
-        
-        $process = new Process('composer dump-autoload');
-        $process->run();
-          */
-
-        Artisan::call('key:generate');
- 
-        
-        $this->info("Dumping the autoloaded files and reloading all new files");
-        
-        $process = new Process('composer dump-autoload');
-        $process->run();
-
-        /*
         $this->info("Publishing the Project files");
         Artisan::call('vendor:publish');
-
         
-
-        //$this->info("Seeding data into the database");
-        //$process = new Process('php artisan db:seed --class=AdminZeroDatabaseSeeder');
-        //$process->run();
+        $this->info("Dumping the autoloaded files and reloading all new files");
         
-        //$this->info("Adding the storage symlink to your public folder");
-        //Artisan::call('storage:link');
-         */
+        $process = new Process('composer dump-autoload');
+        $process->run(); 
+
+        Artisan::call('key:generate');
+
         $this->info("Successfully installed Admin Zero! Enjoy :)");
         return;
         
